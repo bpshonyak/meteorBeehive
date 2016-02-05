@@ -63,11 +63,34 @@
   </form>
 
   {{#if submitted}}
-    {{#each entries}}
-      <!--<a href="{{pathFor route='data.show'}}">-->
-        <p> {{hiveID}} {{colDate}} {{samplePeriod}} {{mites}}  {{formatDate createdOn}} </p>
-      <!--</a>-->
-    {{/each}}
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Hive ID</th>
+        <th>Collection Date</th>
+        <th>Sample Period</th>
+        <th>Number of Mites</th>
+      </tr>
+      </thead>
+      <tbody>
+
+        {{#each entries}}
+
+          <tr>
+            <td>{{hiveID}}</td>
+            <td>{{colDate}}</td>
+            <td>{{samplePeriod}} </td>
+            <td>{{mites}}</td>
+          </tr>
+
+        {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+
   {{/if}}
 
 </template>
