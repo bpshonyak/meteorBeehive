@@ -27,6 +27,9 @@ Router.route('/data/:id', function () {
 
 if (Meteor.isClient) {
 
+  // submitted starts at false
+  Session.setDefault('submitted', false);
+
   Meteor.subscribe("beedata");
 
   Template.beeForm.helpers(
@@ -36,8 +39,10 @@ if (Meteor.isClient) {
         },
         "formatDate": function(date){
           var newDate = moment(date).format('YYYY-MM-DD');
-          console.log(newDate);
           return newDate;
+        },
+        submitted: function () {
+          return Session.get('submitted');
         }
       }
   );
@@ -52,7 +57,8 @@ if (Meteor.isClient) {
           var samplePeriod = $(event.target).find("input[id = samplePeriod]");
           var mites = $(event.target).find("input[id = mites]");
 
-          if(hiveID.val() > 0){
+          // Require all fields
+          if(hiveID.val() > 0 && colDate.val().length > 0 && samplePeriod.val() > 0 && mites.val() > 0){
             BeeData.insert(
                 {
                   hiveID: hiveID.val(),
@@ -62,10 +68,12 @@ if (Meteor.isClient) {
                   createdOn: Date.now()
                 });
 
-            hiveID.val("");
-            colDate.val("");
-            samplePeriod.val("");
-            mites.val("");
+            Session.set('submitted', true);
+
+            //hiveID.val("");
+            //colDate.val("");
+            //samplePeriod.val("");
+            //mites.val("");
 
           }
 

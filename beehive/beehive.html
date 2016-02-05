@@ -21,7 +21,7 @@
     <div class="form-group">
       <div class="col-xs-4">
         <label class="control-label">Hive ID:</label>
-        <input id="hiveID" type="number" placeholder="John Doe" class="form-control input-md">
+        <input id="hiveID" type="number" placeholder="" class="form-control input-md">
 
       </div>
     </div>
@@ -30,7 +30,7 @@
     <div class="form-group">
       <div class="col-xs-4">
         <label class="control-label">Collection Date</label>
-        <input id="colDate" type="date" placeholder="John Doe" class="form-control input-md">
+        <input id="colDate" type="date" placeholder="" class="form-control input-md">
 
       </div>
     </div>
@@ -39,7 +39,7 @@
     <div class="form-group">
       <div class="col-xs-4">
         <label class="control-label">Sample Period</label>
-        <input id="samplePeriod" type="number" placeholder="John Doe" class="form-control input-md">
+        <input id="samplePeriod" type="number" placeholder="" class="form-control input-md">
 
       </div>
     </div>
@@ -48,7 +48,7 @@
     <div class="form-group">
       <div class="col-xs-4">
         <label class="control-label">Number of Mites</label>
-        <input id="mites" type="number" placeholder="John Doe" class="form-control input-md">
+        <input id="mites" type="number" placeholder="" class="form-control input-md">
 
       </div>
     </div>
@@ -56,17 +56,19 @@
 
     <div class="form-group">
       <div class="col-xs-4">
-        <button type="submit" class="btn btn-primary">Post Message</button>
+        <button type="submit" class="btn btn-primary">Submit Data</button>
       </div>
     </div>
 
   </form>
 
-  {{#each entries}}
-    <!--<a href="{{pathFor route='data.show'}}">-->
-      <p> {{hiveID}} {{colDate}} {{smaplePeriod}} {{mites}}  {{formatDate createdOn}} </p>
-    <!--</a>-->
-  {{/each}}
+  {{#if submitted}}
+    {{#each entries}}
+      <!--<a href="{{pathFor route='data.show'}}">-->
+        <p> {{hiveID}} {{colDate}} {{samplePeriod}} {{mites}}  {{formatDate createdOn}} </p>
+      <!--</a>-->
+    {{/each}}
+  {{/if}}
 
 </template>
 
