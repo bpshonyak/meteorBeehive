@@ -1,7 +1,7 @@
-Messages = new Mongo.Collection("messages");
+BeeData = new Mongo.Collection("beedata");
 
 Router.route('/', function () {
-  this.render('guestBook');		// render the guestbook template
+  this.render('beeForm');		// render the guestbook template
   this.layout('layout');    	// set the main layout template
 });
 
@@ -10,10 +10,10 @@ Router.route('/about', function () {
   this.layout('layout');    // set the main layout template
 });
 
-Router.route('/message/:id', function () {
+Router.route('/data/:id', function () {
       this.render('message', {
         data: function () {
-          return Messages.findOne({
+          return BeeData.findOne({
             _id: this.params.id
           });
         }
@@ -21,18 +21,18 @@ Router.route('/message/:id', function () {
       this.layout('layout');    // set the main layout template
     },
     {
-      name: 'message.show'
+      name: 'data.show'
     }
 );
 
 if (Meteor.isClient) {
 
-  Meteor.subscribe("messages");
+  Meteor.subscribe("beedata");
 
-  Template.guestBook.helpers(
+  Template.beeForm.helpers(
       {
-        "messages": function(){
-          return Messages.find( {}, {sort: {createdOn: -1} } ) || {};
+        "entries": function(){
+          return BeeData.find( {}, {sort: {createdOn: -1} } ) || {};
         },
         "formatDate": function(date){
           var newDate = moment(date).format('YYYY-MM-DD');
@@ -42,40 +42,31 @@ if (Meteor.isClient) {
       }
   );
 
-  Template.guestBook.events(
+  Template.beeForm.events(
       {
         "submit form": function(event){
           event.preventDefault();
 
-          var name = $(event.target).find("input[id = name]");
-          var msg = $(event.target).find("textarea[id = message]");
+          var hiveID = $(event.target).find("input[id = hiveID]");
+          var colDate = $(event.target).find("input[id = colDate]");
+          var samplePeriod = $(event.target).find("input[id = samplePeriod]");
+          var mites = $(event.target).find("input[id = mites]");
 
-          if(name.val().length > 0 && msg.val().length > 0){
-            Messages.insert(
+          if(hiveID.val() > 0){
+            BeeData.insert(
                 {
-                  name: name.val(),
-                  message: msg.val(),
+                  hiveID: hiveID.val(),
+                  colDate: colDate.val(),
+                  samplePeriod: samplePeriod.val(),
+                  mites: mites.val(),
                   createdOn: Date.now()
                 });
 
-            name.val("");
-            msg.val("");
+            hiveID.val("");
+            colDate.val("");
+            samplePeriod.val("");
+            mites.val("");
 
-            msg.removeClass("error");
-            name.removeClass("error");
-
-          } else {
-            // TODO: remove redundancy
-            if(msg.val().length < 1){
-              msg.addClass("error");
-            } else {
-              msg.removeClass("error");
-            }
-            if(name.val().length < 1){
-              name.addClass("error");
-            } else {
-              name.removeClass("error");
-            }
           }
 
         }
@@ -86,8 +77,8 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
 
-    Meteor.publish("messages", function () {
-      return Messages.find();
+    Meteor.publish("beedata", function () {
+      return BeeData.find();
     });
 
   });

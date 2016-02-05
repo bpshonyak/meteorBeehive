@@ -14,25 +14,45 @@
 
 </template>
 
-<template name="guestBook">
+<template name="beeForm">
   <form class="form-horizontal">
 
-    <!-- Text input-->
+    <!-- Number input-->
     <div class="form-group">
       <div class="col-xs-4">
-        <label class="control-label" for="textinput">Name</label>
-        <input id="name" type="text" placeholder="John Doe" class="form-control input-md">
+        <label class="control-label">Hive ID:</label>
+        <input id="hiveID" type="number" placeholder="John Doe" class="form-control input-md">
 
       </div>
     </div>
 
-    <!-- Textarea -->
+    <!-- Date input-->
     <div class="form-group">
       <div class="col-xs-4">
-        <label class="control-label" for="textarea">Message</label>
-        <textarea class="form-control" placeholder="Hello world!" id="message" col="30" row="3" ></textarea>
+        <label class="control-label">Collection Date</label>
+        <input id="colDate" type="date" placeholder="John Doe" class="form-control input-md">
+
       </div>
     </div>
+
+    <!-- Number input-->
+    <div class="form-group">
+      <div class="col-xs-4">
+        <label class="control-label">Sample Period</label>
+        <input id="samplePeriod" type="number" placeholder="John Doe" class="form-control input-md">
+
+      </div>
+    </div>
+
+    <!-- Number input-->
+    <div class="form-group">
+      <div class="col-xs-4">
+        <label class="control-label">Number of Mites</label>
+        <input id="mites" type="number" placeholder="John Doe" class="form-control input-md">
+
+      </div>
+    </div>
+
 
     <div class="form-group">
       <div class="col-xs-4">
@@ -41,6 +61,12 @@
     </div>
 
   </form>
+
+  {{#each entries}}
+    <!--<a href="{{pathFor route='data.show'}}">-->
+      <p> {{hiveID}} {{colDate}} {{smaplePeriod}} {{mites}}  {{formatDate createdOn}} </p>
+    <!--</a>-->
+  {{/each}}
 
 </template>
 
