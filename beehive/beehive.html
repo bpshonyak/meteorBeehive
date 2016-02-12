@@ -62,8 +62,9 @@
 
   </form>
 
-  {{#if submitted}}
+</template>
 
+<template name="admin">
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -76,29 +77,48 @@
       </thead>
       <tbody>
 
-        {{#each entries}}
+      {{#each entries}}
 
-          <tr>
-            <td>{{hiveID}}</td>
-            <td>{{colDate}}</td>
-            <td>{{samplePeriod}} </td>
-            <td>{{mites}}</td>
-          </tr>
+        <tr>
+          <td>{{hiveID}}</td>
+          <td>{{colDate}}</td>
+          <td>{{samplePeriod}} </td>
+          <td>{{mites}}</td>
+        </tr>
 
-        {{/each}}
+      {{/each}}
 
       </tbody>
     </table>
   </div>
-
-  {{/if}}
-
 </template>
 
-<template name="about">
-  <p>This app lets you message people!</p>
-</template>
+<template name="hiveData">
+  <p>{{data}}</p>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Hive ID</th>
+        <th>Collection Date</th>
+        <th>Sample Period</th>
+        <th>Number of Mites</th>
+      </tr>
+      </thead>
+      <tbody>
 
-<template name="message">
-  <p> <span class="name">{{name}}</span> {{message}} <span class="date"></span></p>
+      {{#each entries}}
+
+        <tr>
+          <td>{{hiveID}}</td>
+          <td>{{colDate}}</td>
+          <td>{{samplePeriod}}</td>
+          <td>{{mites}}</td>
+        </tr>
+
+      {{/each}}
+
+      </tbody>
+    </table>
+  </div>
 </template>

@@ -1,24 +1,18 @@
 BeeData = new Mongo.Collection("beedata");
 
-Router.route('/', function () {
-  this.render('beeForm');		// render the guestbook template
-  this.layout('layout');    	// set the main layout template
+Router.route('/home', function () {
+  this.render('beeForm');
+  this.layout('layout');
 });
 
-Router.route('/about', function () {
-  this.render('about'); 		// render the guestbook template
-  this.layout('layout');    // set the main layout template
+Router.route('/admin', function () {
+  this.render('admin');
+  this.layout('layout');
 });
 
-Router.route('/data/:id', function () {
-      this.render('message', {
-        data: function () {
-          return BeeData.findOne({
-            _id: this.params.id
-          });
-        }
-      }); 		// render the guestbook template
-      this.layout('layout');    // set the main layout template
+Router.route('/hive/:name', function () {
+      this.render('hiveData', {});
+      this.layout('layout');
     },
     {
       name: 'data.show'
@@ -27,12 +21,9 @@ Router.route('/data/:id', function () {
 
 if (Meteor.isClient) {
 
-  // submitted starts at false
-  Session.setDefault('submitted', false);
-
   Meteor.subscribe("beedata");
 
-  Template.beeForm.helpers(
+  Template.admin.helpers(
       {
         "entries": function(){
           return BeeData.find( {}, {sort: {createdOn: -1} } ) || {};
@@ -40,9 +31,16 @@ if (Meteor.isClient) {
         "formatDate": function(date){
           var newDate = moment(date).format('YYYY-MM-DD');
           return newDate;
-        },
-        submitted: function () {
-          return Session.get('submitted');
+        }
+      }
+  );
+
+  Template.hiveData.helpers(
+      {
+        "entries": function(){
+          var id = Router.current().params.name;
+          console.log(id);
+          return BeeData.find( { hiveID: id}, {sort: {createdOn: -1} } ) || {};
         }
       }
   );
@@ -68,12 +66,12 @@ if (Meteor.isClient) {
                   createdOn: Date.now()
                 });
 
-            Session.set('submitted', true);
+            Router.go('data.show', {name: hiveID.val()});
 
-            //hiveID.val("");
-            //colDate.val("");
-            //samplePeriod.val("");
-            //mites.val("");
+            hiveID.val("");
+            colDate.val("");
+            samplePeriod.val("");
+            mites.val("");
 
           }
 
