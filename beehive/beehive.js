@@ -19,7 +19,10 @@ Router.route('/hive/:name', function () {
     }
 );
 
-Router.route('/csv', {
+
+//CSV file download source: http://stackoverflow.com/questions/27238457/creating-a-csv-file-from-a-meteor-js-collection
+//Package used: https://atmospherejs.com/harrison/papa-parse
+Router.route('/export', {
   where: 'server',
   action: function () {
     var filename = 'bee_data.csv';
