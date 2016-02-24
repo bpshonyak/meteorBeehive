@@ -23,13 +23,15 @@ Router.route('/csv', {
   where: 'server',
   action: function () {
     var filename = 'bee_data.csv';
-    var fileData = "";
+
+    var records = BeeData.find().fetch();
+    var fileData =  Papa.unparse(records);
 
     var headers = {
       'Content-type': 'text/csv',
       'Content-Disposition': "attachment; filename=" + filename
     };
-    var records = DummyData.find();
+
     // build a CSV string. Oversimplified. You'd have to escape quotes and commas.
     records.forEach(function(rec) {
       fileData += rec.Name + "," + rec.Address + "," + rec.Description + "\r\n";
